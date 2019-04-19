@@ -1,17 +1,13 @@
-const express = require('express');
-require('./db/mongoose');
-
-// Models
-// const User = require('./models/user');
-// const Task = require('./models/task');
+const express = require('express')
+require('./db/mongoose')
 
 // Router
-const taskRouter = require('./routers/task');
-const userRouter = require('./routers/user');
+const taskRouter = require('./routers/task')
+const userRouter = require('./routers/user')
 
 // Initialise app
-const app = express(),
-    port = process.env.PORT || 1800;
+const app = express()
+const port = process.env.PORT || 1800
 
 // provide resources
 app.use(express.json())
