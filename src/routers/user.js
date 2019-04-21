@@ -80,6 +80,25 @@ router.get('/users/:id', async(req, res) => {
     }
 });
 
+router.patch('/users/me', auth, async (req, res) => {
+    const updates = Object.keys(req.body)
+    const allowedUpdates = ['name', 'email', 'password', 'age']
+    const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
+    
+    if(!isValidOperation) {
+        return res.status(400).send({error: 'Invalid operation!'})
+    }
+
+    try {
+        const user = req.user
+        updates.forEach((update) => user[update] = req.body[update])
+        await user.save()
+        res.send(user)
+    } catch(e) {
+        res.status(500).send(e)
+    }
+})
+
 router.patch('/users/:id', async (req, res) => {
     const updates = Object.keys(req.body)
     const allowedUpdates = ['name', 'email', 'password', 'age']
@@ -101,6 +120,15 @@ router.patch('/users/:id', async (req, res) => {
         res.send(user)
     } catch(e) {
         res.status(500).send(e)
+    }
+})
+
+router.delete('/users/me', auth, async (req, res) => {
+    try {
+        req.user.remove()
+        res.status(200).send(req.user)
+    } catch (e) {
+        res.status(500).send()
     }
 })
 
