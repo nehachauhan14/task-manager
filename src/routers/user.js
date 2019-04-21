@@ -22,7 +22,7 @@ router.post('/user/login', async (req, res) => {
         const user = await User.findUserByCredentials(req.body.email, req.body.password)
         const token = await user.generateAuthToken()
 
-        res.send({user, token})
+        res.send({user: user, token})
     } catch(e) {
         res.status(500).send({"error": e.message})
     }
