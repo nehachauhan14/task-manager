@@ -9,7 +9,11 @@ const userRouter = require('./routers/user')
 const app = express()
 const port = process.env.PORT || 1800
 
+
 // provide resources
+// app.use((req, res, next) => {
+//     res.status(503).send('Server is under maintainance. Please try again after some time!');
+// })
 app.use(express.json())
 app.use(taskRouter)
 app.use(userRouter)
